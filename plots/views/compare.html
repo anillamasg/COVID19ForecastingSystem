@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>COVID-19 Forecasting System</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="../css/cover.css" rel="stylesheet">
+
+    <script type="application/javascript">
+        let metricMap = new Map();
+        metricMap.set('Confirmed Cases', 'confirmed_cases');
+        metricMap.set('Recovered Cases', 'recovered_cases');
+        metricMap.set('Deaths', 'deaths');
+        metricMap.set('Australian Capital Territory', 'ACT');
+        metricMap.set('New South Wales', 'NSW');
+        metricMap.set('Northern Territory', 'NT');
+        metricMap.set('Queensland', 'QLD');
+        metricMap.set('South Australia', 'SA');
+        metricMap.set('Tasmania', 'TAS');
+        metricMap.set('Western Australia', 'WA');
+        metricMap.set('Victoria', 'VIC');
+
+        function changeMetric(metric, btnId) {
+            let metricValue = $('#' + btnId).text();
+            if (!(metric === metricValue)) {
+                $('#' + btnId).text(metric);
+            }
+        }
+
+        function changeLocationMetric(metric, btnId) {
+            let metricValue = $('#' + btnId).text();
+            if (!(metric === metricValue)) {
+                $('#' + btnId).text(metric);
+
+                if (btnId === 'locationChoice1') {
+                    let allLocationElements = $('#locationDropdown2 a');
+
+                    $.each(allLocationElements, function (i, ele) {
+                        if (ele.getAttribute('data-value') == metric) {
+                            ele.setAttribute('hidden','true');
+                        } else {
+                            ele.removeAttribute('hidden');
+                        }
+                    });
+                } else {
+                    let allLocationElements = $('#locationDropdown1 a');
+
+                    $.each(allLocationElements, function (i, ele) {
+                        if (ele.getAttribute('data-value') === metric) {
+                            ele.setAttribute('hidden','true');
+                        } else {
+                            ele.removeAttribute('hidden');
+                        }
+                    });
+                }
+
+                // $('#confirmedCasesGraph').attr('src','predicted/confirmed_cases/'+metricMap.get(metric)+'_prediction.html')
+                // $('#recoveredCasesGraph').attr('src','predicted/recovered_cases/'+metricMap.get(metric)+'_prediction.html')
+                // $('#deathCasesGraph').attr('src','predicted/deaths/'+metricMap.get(metric)+'_prediction.html')
+            }
+        }
+
+        function compare(){
+            if(($('#comparisonMetric').text().trim() === 'Comparison Metric') || ($('#locationChoice1').text().trim() === 'Location 1') || ($('#locationChoice2').text().trim() === 'Location 2')){
+                if($('#comparisonMetric').text().trim() === 'Comparison Metric') {
+                    alert("Please select Comparison Metric.");
+                } else if($('#locationChoice1').text().trim() === 'Location 1'){
+                    alert("Please select Location 1.");
+                }else{
+                    alert("Please select Location 2.");
+                }
+                return false;
+            } else {
+                $('#compareGraph').attr('src','compare/'+ metricMap.get($('#comparisonMetric').text().trim()) + '/' +metricMap.get($('#locationChoice1').text().trim())+ '_' + metricMap.get($('#locationChoice2').text().trim()) +'_comparison.html')
+            }
+            return true;
+        }
+
+    </script>
+</head>
+<body>
+<div class="cover-container d-flex p-3 mx-auto flex-column compare">
+    <header class="masthead">
+        <div class="inner">
+            <a href="index.html"><h3 class="masthead-brand">COVID-19 Forecasting System</h3></a>
+            <nav class="nav nav-masthead justify-content-center">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link active" href="#">Compare</a>
+                <a class="nav-link" href="about.html">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dropdown comparison-metric">
+        <button class="btn btn-info dropdown-toggle" type="button"
+                data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" id="comparisonMetric">
+            Comparison Metric
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" onclick="changeMetric('Confirmed Cases','comparisonMetric')">Confirmed
+                Cases</a>
+            <a class="dropdown-item" href="#" onclick="changeMetric('Recovered Cases','comparisonMetric')">Recovered
+                Cases</a>
+            <a class="dropdown-item" href="#" onclick="changeMetric('Deaths','comparisonMetric')">Deaths</a>
+        </div>
+    </div>
+
+    <div class="location-choice">
+        <div class="dropdown location-choice-div" style="margin-left: 90px">
+            <button class="btn btn-info dropdown-toggle" type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="padding-left: 40px;padding-right: 40px;"
+                    id="locationChoice1">
+                Location 1
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="locationDropdown1">
+                <a class="dropdown-item" href="#" data-value="Australian Capital Territory" onclick="changeLocationMetric('Australian Capital Territory','locationChoice1')">Australian Capital Territory</a>
+                <a class="dropdown-item" href="#" data-value="New South Wales" onclick="changeLocationMetric('New South Wales','locationChoice1')">New South Wales</a>
+                <a class="dropdown-item" href="#" data-value="Northern Territory" onclick="changeLocationMetric('Northern Territory','locationChoice1')">Northern Territory</a>
+                <a class="dropdown-item" href="#" data-value="Queensland" onclick="changeLocationMetric('Queensland','locationChoice1')">Queensland</a>
+                <a class="dropdown-item" href="#" data-value="South Australia" onclick="changeLocationMetric('South Australia','locationChoice1')">South Australia</a>
+                <a class="dropdown-item" href="#" data-value="Tasmania" onclick="changeLocationMetric('Tasmania','locationChoice1')">Tasmania</a>
+                <a class="dropdown-item" href="#" data-value="Victoria" onclick="changeLocationMetric('Victoria','locationChoice1')">Victoria</a>
+                <a class="dropdown-item" href="#" data-value="Western Australia" onclick="changeLocationMetric('Western Australia','locationChoice1')">Western Australia</a>
+            </div>
+        </div>
+        <div class="location-choice-div" style="margin: 8px 10px 0 10px;"><p>AND</p></div>
+        <div class="dropdown location-choice-div">
+            <button class="btn btn-info dropdown-toggle" type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="padding-left: 40px;padding-right: 40px;"
+                    id="locationChoice2">
+                Location 2
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="locationDropdown2">
+                <a class="dropdown-item" href="#" data-value="Australian Capital Territory" onclick="changeLocationMetric('Australian Capital Territory','locationChoice2')">Australian Capital Territory</a>
+                <a class="dropdown-item" href="#" data-value="New South Wales" onclick="changeLocationMetric('New South Wales','locationChoice2')">New South Wales</a>
+                <a class="dropdown-item" href="#" data-value="Northern Territory" onclick="changeLocationMetric('Northern Territory','locationChoice2')">Northern Territory</a>
+                <a class="dropdown-item" href="#" data-value="Queensland" onclick="changeLocationMetric('Queensland','locationChoice2')">Queensland</a>
+                <a class="dropdown-item" href="#" data-value="South Australia" onclick="changeLocationMetric('South Australia','locationChoice2')">South Australia</a>
+                <a class="dropdown-item" href="#" data-value="Tasmania" onclick="changeLocationMetric('Tasmania','locationChoice2')">Tasmania</a>
+                <a class="dropdown-item" href="#" data-value="Victoria" onclick="changeLocationMetric('Victoria','locationChoice2')">Victoria</a>
+                <a class="dropdown-item" href="#" data-value="Western Australia" onclick="changeLocationMetric('Western Australia','locationChoice2')">Western Australia</a>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success" style="float: right" id="compareBtn" onclick="return(compare())">Compare</button>
+    </div>
+
+    <div class="inner cases">
+        <div class="cases-heading">
+            <p>Confirmed Cases</p>
+        </div>
+        <div class="cases-body">
+            <div class="cases-body-graph">
+                <iframe id="compareGraph"  src="compare/confirmed_cases/NSW_QLD_comparison.html"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="mastfoot mt-auto ">
+        <div class="inner">
+            <p style="text-align: center">A project by AnilL, ChirayuG, and SrijanaG; students of Victoria
+                University.</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
