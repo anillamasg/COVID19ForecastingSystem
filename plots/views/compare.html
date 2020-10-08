@@ -75,17 +75,25 @@
         }
 
         function compare(){
-            if(($('#comparisonMetric').text().trim() === 'Comparison Metric') || ($('#locationChoice1').text().trim() === 'Location 1') || ($('#locationChoice2').text().trim() === 'Location 2')){
-                if($('#comparisonMetric').text().trim() === 'Comparison Metric') {
+            let comparisonMetric = $('#comparisonMetric').text().trim();
+            let locationChoice1 = $('#locationChoice1').text().trim();
+            let locationChoice2 = $('#locationChoice2').text().trim();
+
+            if((comparisonMetric === 'Comparison Metric') || (locationChoice1 === 'Location 1') || (locationChoice2 === 'Location 2')){
+                if(comparisonMetric === 'Comparison Metric') {
                     alert("Please select Comparison Metric.");
-                } else if($('#locationChoice1').text().trim() === 'Location 1'){
+                } else if(locationChoice1 === 'Location 1'){
                     alert("Please select Location 1.");
                 }else{
                     alert("Please select Location 2.");
                 }
                 return false;
             } else {
-                $('#compareGraph').attr('src','compare/'+ metricMap.get($('#comparisonMetric').text().trim()) + '/' +metricMap.get($('#locationChoice1').text().trim())+ '_' + metricMap.get($('#locationChoice2').text().trim()) +'_comparison.html')
+                if(locationChoice1 < locationChoice2){
+                    $('#compareGraph').attr('src','compare/'+ metricMap.get(comparisonMetric) + '/' +metricMap.get(locationChoice1)+ '_' + metricMap.get(locationChoice2) +'_comparison.html');
+                }else {
+                    $('#compareGraph').attr('src','compare/'+ metricMap.get(comparisonMetric) + '/' +metricMap.get(locationChoice2)+ '_' + metricMap.get(locationChoice1) +'_comparison.html');
+                }
             }
             return true;
         }
@@ -106,7 +114,7 @@
     </header>
 
     <div class="dropdown comparison-metric">
-        <button class="btn btn-info dropdown-toggle" type="button"
+        <button class="btn btn-outline-light dropdown-toggle" type="button"
                 data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" id="comparisonMetric">
             Comparison Metric
@@ -122,7 +130,7 @@
 
     <div class="location-choice">
         <div class="dropdown location-choice-div" style="margin-left: 90px">
-            <button class="btn btn-info dropdown-toggle" type="button"
+            <button class="btn btn-outline-light dropdown-toggle" type="button"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" style="padding-left: 40px;padding-right: 40px;"
                     id="locationChoice1">
@@ -141,7 +149,7 @@
         </div>
         <div class="location-choice-div" style="margin: 8px 10px 0 10px;"><p>AND</p></div>
         <div class="dropdown location-choice-div">
-            <button class="btn btn-info dropdown-toggle" type="button"
+            <button class="btn btn-outline-light dropdown-toggle" type="button"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" style="padding-left: 40px;padding-right: 40px;"
                     id="locationChoice2">
@@ -167,7 +175,7 @@
         </div>
         <div class="cases-body">
             <div class="cases-body-graph">
-                <iframe id="compareGraph"  src="compare/confirmed_cases/NSW_QLD_comparison.html"></iframe>
+                <iframe id="compareGraph"></iframe>
             </div>
         </div>
     </div>

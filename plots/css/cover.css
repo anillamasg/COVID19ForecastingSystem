@@ -127,7 +127,7 @@ body {
 
 .confirmed-cases-body-graph, .recovered-cases-body-graph, .death-cases-body-graph, .new-cases-body-graph {
     float: left;
-    width: 90%;
+    width: 100%;
     height: 100%;
 }
 
