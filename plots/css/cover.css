@@ -183,3 +183,10 @@ body {
 .location-choice-div {
     display: inline-block;
 }
+
+.custom-warning {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #ffc107!important;
+    padding-top: 5px;
+}

@@ -81,14 +81,22 @@
 
             if((comparisonMetric === 'Comparison Metric') || (locationChoice1 === 'Location 1') || (locationChoice2 === 'Location 2')){
                 if(comparisonMetric === 'Comparison Metric') {
-                    alert("Please select Comparison Metric.");
+                    $('#comparisonMetricWarning').remove();
+                    $('#locationWarning').remove();
+                    $('.comparison-metric').after('<div class="custom-warning" role="alert" id="comparisonMetricWarning">Please select Comparison Metric.</div>');
                 } else if(locationChoice1 === 'Location 1'){
-                    alert("Please select Location 1.");
+                    $('#comparisonMetricWarning').remove();
+                    $('#locationWarning').remove();
+                    $('.location-choice').after('<div class="custom-warning" role="alert" id="locationWarning">Please select Location 1.</div>');
                 }else{
-                    alert("Please select Location 2.");
+                    $('#comparisonMetricWarning').remove();
+                    $('#locationWarning').remove();
+                    $('.location-choice').after('<div class="custom-warning" role="alert" id="locationWarning">Please select Location 2.</div>');
                 }
                 return false;
             } else {
+                $('#comparisonMetricWarning').remove();
+                $('#locationWarning').remove();
                 if(locationChoice1 < locationChoice2){
                     $('#compareGraph').attr('src','compare/'+ metricMap.get(comparisonMetric) + '/' +metricMap.get(locationChoice1)+ '_' + metricMap.get(locationChoice2) +'_comparison.html');
                 }else {
