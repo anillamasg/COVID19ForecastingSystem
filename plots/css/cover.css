@@ -190,3 +190,15 @@ body {
     color: #ffc107!important;
     padding-top: 5px;
 }
+
+button#compareBtn:hover {
+    color: #f8f9fa;
+    background-color: #017a1e;
+    border-color: #f8f9fa;
+}
+
+button#locationMetricBtn:hover {
+    color: #f8f9fa;
+    background-color: #145fb0;
+    border-color: #f8f9fa;
+}
