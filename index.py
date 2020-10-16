@@ -306,9 +306,9 @@ if __name__ == "__main__":
             download_data_file()
 
             # prediction for all metrics in all locations
-            # for location in locations:
-            #     for met in allMetrics:
-            #         cases_prediction(location, met)
+            for location in locations:
+                for met in allMetrics:
+                    cases_prediction(location, met)
 
             # comparison prediction of each metric with other metrics in all locations
             for compareLocation in compareLocations:
