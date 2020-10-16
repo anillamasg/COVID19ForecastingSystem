@@ -318,7 +318,5 @@ if __name__ == "__main__":
                     for met in allMetrics:
                         compare_prediction(compareLocation, tempCompareLocation, met)
 
-        time.sleep(1800)
-        print("Checking each 20 mins.")
-        # time.sleep(28800)
-        # print("Checking date after each 8 hours for data update.")
+        time.sleep(28800)
+        print("Checking date after each 8 hours for data update.")
